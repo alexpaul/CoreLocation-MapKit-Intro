@@ -45,8 +45,6 @@ class MapViewController: UIViewController {
   
   private func loadMapView() {
     let annotations = makeAnnotations()
-    mapView.addAnnotations(annotations)
-    
     mapView.showAnnotations(annotations, animated: true)
   }
   
