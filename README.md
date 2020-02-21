@@ -210,8 +210,6 @@ private func makeAnnotations() -> [MKPointAnnotation] {
 ```swift 
 private func loadMapView() {
   let annotations = makeAnnotations()
-  mapView.addAnnotations(annotations)
-
   mapView.showAnnotations(annotations, animated: true)
 }
 ```
