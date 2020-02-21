@@ -15,7 +15,8 @@ It's highly recommended that we keep a strong reference to a CLLocationManager i
  You must keep a strong reference to the location manager object until all tasks involving that object complete.
  Because most location manager tasks run asynchronously, storing your location manager in a local variable is insufficient.
 */
-private let locationSession = CoreLocationSession()
+
+public var locationManager: CLLocationManager
 ```
 
 ## 2. Request location permissions 
