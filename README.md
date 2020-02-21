@@ -117,26 +117,27 @@ private func startSignificantLocationChanges() {
 ## 7. Start monitoring a region
 
 ```swift 
-private func monintorRegion() {
-  guard let coordinate = coordinates["Pursuit"] else { return }
-  let radius = locationSession.locationManager.maximumRegionMonitoringDistance // largest distance to a region
-  let identifier = "monitorRegion"
-  let someRegion = CLCircularRegion(center: coordinate, radius: radius, identifier: identifier)
-  someRegion.notifyOnEntry = true
-  someRegion.notifyOnExit = true
-  locationSession.locationManager.startMonitoring(for: someRegion)
+private func startMonitoringRegion() {
+  let location = Location.getLocations()[2] // central park
+  let identifier = "monitoring region"
+  let region = CLCircularRegion(center: location.coordinate, radius: 500, identifier: identifier)
+  region.notifyOnEntry = true
+  region.notifyOnExit = false
+
+  locationManager.startMonitoring(for: region)
 }
 ```
 
 ## 8. Stop monitoring a region
 
 ```swift 
-public func stopMonitoringRegion() {
-  guard let location = (Location.getLocations().filter { $0.title.lowercased().contains(locationQuery) }).first else {
-    return
-  }
-  let someRegion = CLCircularRegion(center: location.coordinate, radius: radius, identifier: regionIdentifier)
-  locationManager.stopMonitoring(for: someRegion)
-  print("stopMonitoringRegion")
+private func stopMonitoringRegion() {
+  let location = Location.getLocations()[2] // central park
+  let identifier = "monitoring region"
+  let region = CLCircularRegion(center: location.coordinate, radius: 500, identifier: identifier)
+  region.notifyOnEntry = true
+  region.notifyOnExit = false
+
+  locationManager.stopMonitoring(for: region)
 }
 ```
