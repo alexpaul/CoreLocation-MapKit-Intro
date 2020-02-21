@@ -1,4 +1,4 @@
-# CoreLocation, MapKit Introduction
+# CoreLocation Introduction
 
 Introduction to CoreLocation and MapKit.
 
@@ -141,3 +141,78 @@ private func stopMonitoringRegion() {
   locationManager.stopMonitoring(for: region)
 }
 ```
+
+## 9. Convert CLLocationCoordinate2D to CLPlacemark
+
+```swift 
+public func convertCoordinateToPlacemark(coordinate: CLLocationCoordinate2D) {
+  // we will use the CLGeocoder() class for converting coordinate (CLLocationCoordinate2D) to placemark (CLPlacemark)
+
+  // we need to create CLLocation
+  let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+
+  CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+    if let error = error {
+      print("reverseGeocodeLocation: \(error)")
+    }
+    if let firstPlacemark = placemarks?.first {
+      print("placemark info: \(firstPlacemark)")
+    }
+  }
+}
+```
+
+## 10. Convert CLPlacemark to CLLocationCoordinate2D
+
+```swift 
+public func convertPlaceNameToCoordinate(addressString: String) {
+  // coverting an address to a coordinate
+  CLGeocoder().geocodeAddressString(addressString) { (placemarks, error) in
+    if let error = error {
+      print("geocodeAddressString: \(error)")
+    }
+    if let firstPlacemark = placemarks?.first,
+      let location = firstPlacemark.location {
+      print("place name coordinate is \(location.coordinate)")
+    }
+  }
+}
+```
+
+
+
+# MapKit Introduction
+
+## 1. Show the user's current location
+
+```swift 
+// attempt to show the user's current location
+mapView.showsUserLocation = true
+```
+
+## 2. Make annotations 
+
+```swift 
+private func makeAnnotations() -> [MKPointAnnotation] {
+  var annotations = [MKPointAnnotation]()
+  for location in Location.getLocations() {
+    let annotation = MKPointAnnotation()
+    annotation.coordinate = location.coordinate
+    annotation.title = location.title
+    annotations.append(annotation)
+  }
+  return annotations
+}
+```
+
+## 3. Add annotations to map view 
+
+```swift 
+private func loadMapView() {
+  let annotations = makeAnnotations()
+  mapView.addAnnotations(annotations)
+
+  mapView.showAnnotations(annotations, animated: true)
+}
+```
+
