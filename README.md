@@ -34,8 +34,8 @@ private func requestLocationPersmissions() {
   */
   //CLLocationManager().requestWhenInUseAuthorization()
 
-  // need to have a strong reference to the location manager
-  locationSession.locationManager.requestWhenInUseAuthorization()
+  locationManager.requestAlwaysAuthorization()
+  locationManager.requestWhenInUseAuthorization()  
 }
 ```
 
