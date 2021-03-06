@@ -179,6 +179,53 @@ public func convertPlaceNameToCoordinate(addressString: String) {
 }
 ```
 
+## 11. Placemarks 
+
+```swift 
+extension CoreLocationSession {
+  public func getPostalCode(completion: @escaping (Result<String, LocationError>) -> ()) {
+    guard let location = locationManager.location else {
+      return
+    }
+    CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+      guard error == nil,
+            let placemark = placemarks?.first else {
+        if let error = error {
+          completion(.failure(.geocodingError(error)))
+        }
+        completion(.failure(.unknown))
+        return
+      }
+      print(placemark)
+      
+      print(placemark.administrativeArea)
+      print(placemark.areasOfInterest)
+      print(placemark.locality)
+      print(placemark.name)
+      
+      print(placemark.subAdministrativeArea)
+      print(placemark.subLocality)
+      print(placemark.subThoroughfare)
+      
+      print(placemark.thoroughfare)
+      
+      print(placemark.postalCode)
+      
+      print(placemark.region)
+      
+      print(placemark.location)
+      
+      guard let postalCode = placemark.postalCode else {
+        completion(.failure(.noPostalCode))
+        return
+      }
+      
+      completion(.success(postalCode))
+    }
+  }
+}
+```
+
 
 
 # MapKit Introduction
