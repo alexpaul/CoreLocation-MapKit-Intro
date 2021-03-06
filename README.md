@@ -181,9 +181,11 @@ public func convertPlaceNameToCoordinate(addressString: String) {
 
 ## 11. Placemarks 
 
+> Be sure to import the Contacts framework if you need to access placemark.postalAddress
+
 ```swift 
 extension CoreLocationSession {
-  public func getPostalCode(completion: @escaping (Result<String, LocationError>) -> ()) {
+  public func getPlacemarkFromCoordinate(completion: @escaping (Result<CLPlacemark, LocationError>) -> ()) {
     guard let location = locationManager.location else {
       return
     }
@@ -196,38 +198,42 @@ extension CoreLocationSession {
         completion(.failure(.unknown))
         return
       }
-      print(placemark)
+      
+      print("Placemark: \(placemark.description)")
       
       print("Administrative area: \(placemark.administrativeArea ?? "")")
       print("Areas of interest: \(placemark.areasOfInterest?.description ?? "")")
       print("Locality: \(placemark.locality ?? "")")
       print("Name: \(placemark.name ?? "")")
-
-
+      
+      
       print("Sub Administrative area: \(placemark.subAdministrativeArea ?? "")")
       print("Sub Locality: \(placemark.subLocality ?? "")")
       print("SubThoroughfare: \(placemark.subThoroughfare ?? "")")
       
       print("Thoroughfare: \(placemark.thoroughfare ?? "")")
-
+      
       print("Postal code: \(placemark.postalCode ?? "")")
-
+      
+      print("Postal address: \(placemark.postalAddress?.description ?? "")")
+      
       print("Region: \(placemark.region?.description ?? "")")
-
+      
       print("Location: \(placemark.location?.description ?? "")")
       
-      guard let postalCode = placemark.postalCode else {
+      guard let _ = placemark.postalCode else {
         completion(.failure(.noPostalCode))
         return
       }
       
-      completion(.success(postalCode))
+      completion(.success(placemark))
     }
   }
 }
 
+
 /*
-Apple Campus, Apple Campus, 1 Infinite Loop, Cupertino, CA  95014, United States @ <+37.33233141,-122.03121860> +/- 100.00m, region CLCircularRegion (identifier:'<+37.33213110,-122.02990105> radius 279.38', center:<+37.33213110,-122.02990105>, radius:279.38m)
+Placemark: Apple Campus, Apple Campus, 1 Infinite Loop, Cupertino, CA  95014, United States @ <+37.33233141,-122.03121860> +/- 100.00m, region CLCircularRegion (identifier:'<+37.33213110,-122.02990105> radius 279.38', center:<+37.33213110,-122.02990105>, radius:279.38m)
 Administrative area: CA
 Areas of interest: ["Apple Campus"]
 Locality: Cupertino
@@ -237,9 +243,9 @@ Sub Locality:
 SubThoroughfare: 1
 Thoroughfare: Infinite Loop
 Postal code: 95014
+Postal address: <CNPostalAddress: 0x6000031e5bd0: street=1 Infinite Loop, subLocality=, city=Cupertino, subAdministrativeArea=Santa Clara, state=CA, postalCode=95014, country=United States, countryCode=US>
 Region: CLCircularRegion (identifier:'<+37.33213110,-122.02990105> radius 279.38', center:<+37.33213110,-122.02990105>, radius:279.38m)
-Location: <+37.33233141,-122.03121860> +/- 100.00m (speed -1.00 mps / course -1.00) @ 3/6/21, 11:54:48 AM Eastern Standard Time
-
+Location: <+37.33233141,-122.03121860> +/- 100.00m (speed -1.00 mps / course -1.00) @ 3/6/21, 12:39:36 PM Eastern Standard Time
 */
 ```
 
