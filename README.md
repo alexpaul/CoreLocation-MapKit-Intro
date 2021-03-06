@@ -198,22 +198,23 @@ extension CoreLocationSession {
       }
       print(placemark)
       
-      print(placemark.administrativeArea)
-      print(placemark.areasOfInterest)
-      print(placemark.locality)
-      print(placemark.name)
+      print("Administrative area: \(placemark.administrativeArea ?? "")")
+      print("Areas of interest: \(placemark.areasOfInterest?.description ?? "")")
+      print("Locality: \(placemark.locality ?? "")")
+      print("Name: \(placemark.name ?? "")")
+
+
+      print("Sub Administrative area: \(placemark.subAdministrativeArea ?? "")")
+      print("Sub Locality: \(placemark.subLocality ?? "")")
+      print("SubThoroughfare: \(placemark.subThoroughfare ?? "")")
       
-      print(placemark.subAdministrativeArea)
-      print(placemark.subLocality)
-      print(placemark.subThoroughfare)
-      
-      print(placemark.thoroughfare)
-      
-      print(placemark.postalCode)
-      
-      print(placemark.region)
-      
-      print(placemark.location)
+      print("Thoroughfare: \(placemark.thoroughfare ?? "")")
+
+      print("Postal code: \(placemark.postalCode ?? "")")
+
+      print("Region: \(placemark.region?.description ?? "")")
+
+      print("Location: \(placemark.location?.description ?? "")")
       
       guard let postalCode = placemark.postalCode else {
         completion(.failure(.noPostalCode))
@@ -224,6 +225,22 @@ extension CoreLocationSession {
     }
   }
 }
+
+/*
+Apple Campus, Apple Campus, 1 Infinite Loop, Cupertino, CA  95014, United States @ <+37.33233141,-122.03121860> +/- 100.00m, region CLCircularRegion (identifier:'<+37.33213110,-122.02990105> radius 279.38', center:<+37.33213110,-122.02990105>, radius:279.38m)
+Administrative area: CA
+Areas of interest: ["Apple Campus"]
+Locality: Cupertino
+Name: Apple Campus
+Sub Administrative area: Santa Clara
+Sub Locality: 
+SubThoroughfare: 1
+Thoroughfare: Infinite Loop
+Postal code: 95014
+Region: CLCircularRegion (identifier:'<+37.33213110,-122.02990105> radius 279.38', center:<+37.33213110,-122.02990105>, radius:279.38m)
+Location: <+37.33233141,-122.03121860> +/- 100.00m (speed -1.00 mps / course -1.00) @ 3/6/21, 11:54:48 AM Eastern Standard Time
+
+*/
 ```
 
 
